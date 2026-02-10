@@ -88,18 +88,18 @@ jobs:
           path: ThunderTools
           ref: R4.4.3
 
-      - name: Checkout entservices-infra
+      - name: Checkout entservices-migration
         if: ${{ inputs.caller_source == 'local' }}
         uses: actions/checkout@v3
         with:
-          path: entservices-infra
+          path: entservices-migration
 
-      - name: Checkout entservices-infra-testframework
+      - name: Checkout entservices-migration-testframework
         if: ${{ inputs.caller_source == 'testframework' }}
         uses: actions/checkout@v3
         with:
-          repository: rdkcentral/entservices-infra
-          path: entservices-infra
+          repository: rdkcentral/entservices-migration
+          path: entservices-migration
           ref: develop
 
       - name: Checkout entservices-deviceanddisplay
@@ -134,8 +134,8 @@ jobs:
           git remote add origin https://code.rdkcentral.com/r/components/opensource/westeros
           git config core.sparseCheckout true
           git pull --depth=1 origin master
-          mkdir -p $GITHUB_WORKSPACE/entservices-infra/ResourceManager
-          cp essos/essos-resmgr.h $GITHUB_WORKSPACE/entservices-infra/ResourceManager/
+          mkdir -p $GITHUB_WORKSPACE/entservices-migration/ResourceManager
+          cp essos/essos-resmgr.h $GITHUB_WORKSPACE/entservices-migration/ResourceManager/
 
       - name: Apply patches ThunderTools
         run: |  
@@ -399,12 +399,7 @@ jobs:
           -DCMAKE_DISABLE_FIND_PACKAGE_Udev=ON
           -DCMAKE_DISABLE_FIND_PACKAGE_RFC=ON
           -DCMAKE_DISABLE_FIND_PACKAGE_RBus=ON
-          -DPLUGIN_SYSTEMSERVICES=ON
-          -DPLUGIN_POWERMANAGER=ON
-          -DPLUGIN_DISPLAYSETTINGS=OFF
-          -DPLUGIN_USERPREFERENCES=OFF
-          -DPLUGIN_DEVICEDIAGNOSTICS=OFF
-          -DPLUGIN_WAREHOUSE=OFF
+          -DPLUGIN_MIGRATION=ON
           -DUSE_THUNDER_R4=ON
           -DPLUGIN_L2Tests=ON
           -DRDK_SERVICE_L2_TEST=ON
@@ -415,11 +410,11 @@ jobs:
           &&
           cmake --install build/entservices-deviceanddisplay
 
-      - name: Build entservices-infra
+      - name: Build entservices-migration
         run: >
           cmake
-          -S "$GITHUB_WORKSPACE/entservices-infra"
-          -B build/entservices-infra
+          -S "$GITHUB_WORKSPACE/entservices-migration"
+          -B build/entservices-migration
           -DCMAKE_TOOLCHAIN_FILE="${{ env.TOOLCHAIN_FILE }}"
           -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/install/usr"
           -DCMAKE_MODULE_PATH="$GITHUB_WORKSPACE/install/tools/cmake"
@@ -492,19 +487,6 @@ jobs:
           -DCMAKE_DISABLE_FIND_PACKAGE_RFC=ON
           -DCMAKE_DISABLE_FIND_PACKAGE_RBus=ON
           -DPLUGIN_MIGRATION=ON
-          -DPLUGIN_TELEMETRY=ON
-          -DPLUGIN_USERSETTINGS=ON
-          -DPLUGIN_PERSISTENTSTORE=ON
-          -DPLUGIN_SHAREDSTORAGE=ON
-          -DPLUGIN_RESOURCEMANAGER=ON
-          -DPLUGIN_CLOUDSTORE=ON
-          -DPLUGIN_USBDEVICE=ON
-          -DPLUGIN_USB_MASS_STORAGE=ON
-          -DPLUGIN_LIFECYCLEMANAGER=OFF
-          -DPLUGIN_APPMANAGER=OFF
-          -DPLUGIN_ANALYTICS=ON
-          -DPLUGIN_ANALYTICS_BACKEND_LIBRARY_NAME="libWPEFrameworkAnalyticsBackendMock.so"
-          -DPLUGIN_ANALYTICS_EVENTS_MAP="/tmp/AnalyticsEventsMap.json"
           -DUSE_THUNDER_R4=ON
           -DPLUGIN_L2Tests=ON
           -DRDK_SERVICE_L2_TEST=ON
@@ -513,9 +495,9 @@ jobs:
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           &&
-          cmake --build build/entservices-infra -j6
+          cmake --build build/entservices-migration -j6
           &&
-          cmake --install build/entservices-infra
+          cmake --install build/entservices-migration
 
       - name: Build entservices-testframework
         run: >
@@ -734,12 +716,12 @@ jobs:
           &&
           lcov -c
           -o coverage.info
-          -d build/entservices-infra
+          -d build/entservices-migration
           &&
           lcov
           -r coverage.info
           '/usr/include/*'
-          '*/build/entservices-infra/_deps/*'
+          '*/build/entservices-migration/_deps/*'
           '*/build/entservices-deviceanddisplay/_deps/*'
           '*/build/entservices-entservices-testframework/_deps/*'
           '*/install/usr/include/*'
@@ -754,14 +736,14 @@ jobs:
           &&
           genhtml
           -o coverage
-          -t "entservices-infra coverage"
+          -t "entservices-migration coverage"
           filtered_coverage.info
 
       - name: Upload artifacts
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
-          name: artifacts-L2-infra
+          name: artifacts-L2-migration
           path: |
             coverage/
             valgrind_log
