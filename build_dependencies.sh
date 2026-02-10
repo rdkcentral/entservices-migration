@@ -96,4 +96,27 @@ cmake --build build/entservices-apis --target install
 
 cd ../../
 
+############################
+# generating extrnal headers
+cd $GITHUB_WORKSPACE
+cd entservices-testframework/Tests
+echo " Empty mocks creation to avoid compilation errors"
+echo "======================================================================================"
+mkdir -p headers/Dobby
+mkdir -p headers/Dobby/Public/Dobby
+mkdir -p headers/Dobby/IpcService
+echo "dir created successfully"
+echo "======================================================================================"
+
+echo "======================================================================================"
+echo "empty headers creation"
+cd headers
+echo "current working dir: "${PWD}
+touch Dobby/DobbyProtocol.h
+touch Dobby/DobbyProxy.h
+touch Dobby/Public/Dobby/IDobbyProxy.h
+touch Dobby/IpcService/IpcFactory.h
+echo "files created successfully"
+echo "======================================================================================"
+
 ls -la ${GITHUB_WORKSPACE}
