@@ -94,8 +94,6 @@ cmake -G Ninja -S entservices-apis  -B build/entservices-apis \
 
 cmake --build build/entservices-apis --target install
 
-cd ../../
-
 ############################
 # generating extrnal headers
 cd $GITHUB_WORKSPACE
