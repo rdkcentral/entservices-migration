@@ -140,7 +140,7 @@ jobs:
         with:
           repository: rdkcentral/entservices-migration
           path: entservices-migration
-          ref: feature/RDKEMW-13472
+          ref: develop
 
       - name: Checkout googletest
         uses: actions/checkout@v3
