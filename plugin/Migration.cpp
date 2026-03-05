@@ -18,6 +18,7 @@
 */
 
 #include "Migration.h"
+#include <stdio.h>
 
 #define API_VERSION_NUMBER_MAJOR 1
 #define API_VERSION_NUMBER_MINOR 0
@@ -62,6 +63,8 @@ namespace WPEFramework
     const string Migration::Initialize(PluginHost::IShell* service)
     {
         string message="";
+        
+        printf("Test coverity workflow %s\n");
 
         ASSERT(nullptr != service);
         ASSERT(nullptr == _service);

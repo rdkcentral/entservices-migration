@@ -42,6 +42,8 @@ target_link_libraries(${MODULE_NAME}
         ${NAMESPACE}Plugins::${NAMESPACE}Plugins
         ${NAMESPACE}Definitions::${NAMESPACE}Definitions)
 
+target_compile_options(${MODULE_NAME} PRIVATE -Wno-error=format)
+
 install(TARGETS ${MODULE_NAME}
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${STORAGE_DIRECTORY}/plugins)
 
@@ -71,6 +73,7 @@ target_link_libraries(${PLUGIN_IMPLEMENTATION}
         CompileSettingsDebug::CompileSettingsDebug
         ${NAMESPACE}Plugins::${NAMESPACE}Plugins
          )
+target_compile_options(${PLUGIN_IMPLEMENTATION} PRIVATE -Wno-error=format)
 
 install(TARGETS ${PLUGIN_IMPLEMENTATION}
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${STORAGE_DIRECTORY}/plugins)
