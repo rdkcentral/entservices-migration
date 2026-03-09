@@ -72,6 +72,8 @@ target_link_libraries(${PLUGIN_IMPLEMENTATION}
         ${NAMESPACE}Plugins::${NAMESPACE}Plugins
          )
 
+target_link_libraries(-ltelemetry_msgsender)
+
 install(TARGETS ${PLUGIN_IMPLEMENTATION}
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${STORAGE_DIRECTORY}/plugins)
 
