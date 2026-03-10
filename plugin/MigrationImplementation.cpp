@@ -111,8 +111,7 @@ namespace WPEFramework
                     migrationStatusInfo.migrationStatus = it->second;
                     LOGINFO("Current ENTOS Migration Status is: %s\n", migrationStatusStr.c_str());
 
-                    std::string current_status = it->second;
-                    std::string value = "Current ENTOS Migration Status is " + current_status;
+                    std::string value = "Current ENTOS Migration Status is " + migrationStatusStr;
                     t2_event_s("WPE_INFO_MigStatus_split", (char*)value.c_str());
                     
                     status = true;
