@@ -27,6 +27,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(${NAMESPACE}Plugins REQUIRED)
 find_package(${NAMESPACE}Definitions REQUIRED)
 find_package(CompileSettingsDebug CONFIG REQUIRED)
+find_package(Telemetry)
 
 add_library(${MODULE_NAME} SHARED
     Migration.cpp
@@ -69,8 +70,12 @@ endif (RDK_SERVICE_L2_TEST)
 target_link_libraries(${PLUGIN_IMPLEMENTATION}
     PRIVATE
         CompileSettingsDebug::CompileSettingsDebug
-        ${NAMESPACE}Plugins::${NAMESPACE}Plugins
-         )
+        ${NAMESPACE}Plugins::${NAMESPACE}Plugins)
+
+if(TELEMETRY_FOUND)
+    target_link_libraries(${PLUGIN_IMPLEMENTATION} PRIVATE ${TELEMETRY_LIBRARIES})
+    target_include_directories(${PLUGIN_IMPLEMENTATION} PRIVATE ${TELEMETRY_INCLUDE_DIRS})
+endif()
 
 install(TARGETS ${PLUGIN_IMPLEMENTATION}
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${STORAGE_DIRECTORY}/plugins)
