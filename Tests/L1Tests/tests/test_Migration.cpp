@@ -30,6 +30,7 @@
 #include "ServiceMock.h"
 #include "COMLinkMock.h"
 #include "RfcApiMock.h"
+#include "TelemetryMock.h"
 #define TEST_LOG(x, ...) fprintf(stderr, "\033[1;32m[%s:%d](%s)<PID:%d><TID:%d>" x "\n\033[0m", __FILE__, __LINE__, __FUNCTION__, getpid(), gettid(), ##__VA_ARGS__); fflush(stderr);
 
 using ::testing::NiceMock;
@@ -46,7 +47,8 @@ protected:
     Core::ProxyType<Plugin::MigrationImplementation> MigrationImpl;
     string response;
     ServiceMock  *p_serviceMock  = nullptr;
-    RfcApiImplMock* p_rfcApiImplMock = nullptr ;
+    RfcApiImplMock* p_rfcApiImplMock = nullptr;
+    TelemetryApiImplMock* p_telemetryApiImplMock = nullptr;
     
     MigrationTest()
         : plugin(Core::ProxyType<Plugin::Migration>::Create())
@@ -56,6 +58,8 @@ protected:
         p_serviceMock = new NiceMock <ServiceMock>;
         p_rfcApiImplMock = new NiceMock <RfcApiImplMock>;
         RfcApi::setImpl(p_rfcApiImplMock);
+        p_telemetryApiImplMock = new NiceMock<TelemetryApiImplMock>;
+        TelemetryApi::setImpl(p_telemetryApiImplMock);
 
         ON_CALL(comLinkMock, Instantiate(::testing::_, ::testing::_, ::testing::_))
             .WillByDefault(::testing::Invoke(
@@ -82,6 +86,13 @@ protected:
         {
             delete p_rfcApiImplMock;
             p_rfcApiImplMock = nullptr;
+        }
+
+        TelemetryApi::setImpl(nullptr);
+        if (p_telemetryApiImplMock != nullptr)
+        {
+            delete p_telemetryApiImplMock;
+            p_telemetryApiImplMock = nullptr;
         }
     }
 
