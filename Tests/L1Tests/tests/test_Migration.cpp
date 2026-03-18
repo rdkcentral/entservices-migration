@@ -58,7 +58,7 @@ protected:
         p_serviceMock = new NiceMock <ServiceMock>;
         p_rfcApiImplMock = new NiceMock <RfcApiImplMock>;
         RfcApi::setImpl(p_rfcApiImplMock);
-	p_telemetryApiImplMock = new NiceMock<TelemetryApiImplMock>;
+        p_telemetryApiImplMock = new NiceMock<TelemetryApiImplMock>;
         TelemetryApi::setImpl(p_telemetryApiImplMock);
 
         ON_CALL(comLinkMock, Instantiate(::testing::_, ::testing::_, ::testing::_))
@@ -87,8 +87,7 @@ protected:
             delete p_rfcApiImplMock;
             p_rfcApiImplMock = nullptr;
         }
-
-	TelemetryApi::setImpl(nullptr);
+        TelemetryApi::setImpl(nullptr);
         if (p_telemetryApiImplMock != nullptr)
         {
             delete p_telemetryApiImplMock;
