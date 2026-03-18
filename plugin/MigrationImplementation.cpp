@@ -26,6 +26,8 @@
 #include "UtilsgetFileContent.h"
 #include "rfcapi.h"
 
+#include <telemetry_busmessage_sender.h>
+
 #define MIGRATIONSTATUS "/opt/secure/persistent/MigrationStatus"
 #define TR181_MIGRATIONSTATUS "Device.DeviceInfo.Migration.MigrationStatus"
 
@@ -67,6 +69,10 @@ namespace WPEFramework
                 // Write the string status to the file
                 file << it->second;
                 LOGINFO("Current ENTOS Migration Status is %s\n", it->second.c_str());
+
+                std::string value = "Current ENTOS Migration Status is " + it->second;
+                t2_event_s("WPE_INFO_MigStatus_split", (char*)value.c_str());
+                
                 } else {
                     LOGERR("Failed to open or create file %s\n", MIGRATIONSTATUS);
                     return (ERROR_FILE_IO);
@@ -103,6 +109,10 @@ namespace WPEFramework
                 if (it != stringToStatus.end()) {
                     migrationStatusInfo.migrationStatus = it->second;
                     LOGINFO("Current ENTOS Migration Status is: %s\n", migrationStatusStr.c_str());
+
+                    std::string value = "Current ENTOS Migration Status is " + migrationStatusStr;
+                    t2_event_s("WPE_INFO_MigStatus_split", (char*)value.c_str());
+                    
                     status = true;
                 }
             } else {
