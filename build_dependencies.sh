@@ -115,6 +115,7 @@ touch Dobby/DobbyProxy.h
 touch Dobby/Public/Dobby/IDobbyProxy.h
 touch Dobby/IpcService/IpcFactory.h
 touch rfcapi.h
+touch telemetry_busmessage_sender.h
 echo "files created successfully"
 echo "======================================================================================"
 
