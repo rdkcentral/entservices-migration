@@ -126,7 +126,13 @@ cmake -G Ninja -S ../entservices-helpers -B build/entservices-helpers \
     -DCMAKE_MODULE_PATH="$GITHUB_WORKSPACE/install/tools/cmake" \
     -DUSE_THUNDER_R4=ON \
     -DHIDE_NON_EXTERNAL_SYMBOLS=OFF \
-    -DPLUGIN_HELPERS=ON
+    -DPLUGIN_HELPERS=ON \
+    -DCMAKE_CXX_FLAGS="\
+    -I$GITHUB_WORKSPACE/entservices-testframework/Tests/headers \
+    -I$GITHUB_WORKSPACE/entservices-testframework/Tests/headers/rdk/iarmbus \
+    -I$GITHUB_WORKSPACE/entservices-testframework/Tests/mocks \
+    -include $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/tr181api.h \
+    -include $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/Iarm.h"
 cmake --build build/entservices-helpers --target install
 
 ############################
