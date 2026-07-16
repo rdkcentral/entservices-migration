@@ -63,21 +63,30 @@ namespace WPEFramework
 
             auto it = statusToString.find(status);
             if (it != statusToString.end()) {
-                // if file exists, it will be truncated, otherwise it will be created
-                std::ofstream file(MIGRATIONSTATUS, std::ios::trunc);
-                if (file.is_open()) {
-                // Write the string status to the file
-                file << it->second;
-                LOGINFO("Current ENTOS Migration Status is %s\n", it->second.c_str());
-
-                std::string value = "Current ENTOS Migration Status is " + it->second;
-                t2_event_s("WPE_INFO_MigStatus_split", (char*)value.c_str());
+                // Use atomic write pattern: write to temp file then rename
+                std::string tempFile = std::string(MIGRATIONSTATUS) + ".tmp";
                 
+                // Write to temporary file
+                std::ofstream file(tempFile, std::ios::trunc);
+                if (file.is_open()) {
+                    file << it->second;
+                    file.flush();
+                    file.close();
+                    
+                    // Atomic rename - either succeeds completely or fails completely
+                    if (rename(tempFile.c_str(), MIGRATIONSTATUS) == 0) {
+                        LOGINFO("Current ENTOS Migration Status is %s\n", it->second.c_str());
+
+                        std::string value = "Current ENTOS Migration Status is " + it->second;
+                        t2_event_s("WPE_INFO_MigStatus_split", (char*)value.c_str());
+                    } else {
+                        LOGERR("Failed to rename temp file to %s\n", MIGRATIONSTATUS);
+                        return (ERROR_FILE_IO);
+                    }
                 } else {
-                    LOGERR("Failed to open or create file %s\n", MIGRATIONSTATUS);
+                    LOGERR("Failed to open or create temp file %s\n", tempFile.c_str());
                     return (ERROR_FILE_IO);
                 }
-                file.close();
             } else {
                 LOGERR("Invalid Migration Status\n");
                 return (WPEFramework::Core::ERROR_INVALID_PARAMETER);
