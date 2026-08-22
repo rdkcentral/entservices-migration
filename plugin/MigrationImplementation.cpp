@@ -31,6 +31,9 @@
 #define MIGRATIONSTATUS "/opt/secure/persistent/MigrationStatus"
 #define TR181_MIGRATIONSTATUS "Device.DeviceInfo.Migration.MigrationStatus"
 
+
+
+
 namespace WPEFramework
 {
     namespace Plugin
