@@ -26,7 +26,7 @@
 #include <com/com.h>
 #include <core/core.h>
 
-namespace WPEFramework
+namespace Thunder
 {
     namespace Plugin
     {
@@ -51,4 +51,4 @@ namespace WPEFramework
                 Core::hresult GetMigrationStatus(MigrationStatusInfo& migrationStatusInfo) override;
         };
     } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder

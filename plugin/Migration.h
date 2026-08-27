@@ -26,7 +26,7 @@
 #include "UtilsLogging.h"
 #include "tracing/Logging.h"
 
-namespace WPEFramework 
+namespace Thunder 
 {
     namespace Plugin
     {
@@ -60,4 +60,4 @@ namespace WPEFramework
                 Exchange::IMigration* _migration{};
        };
     } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder

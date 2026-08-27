@@ -31,7 +31,7 @@
 #define MIGRATIONSTATUS "/opt/secure/persistent/MigrationStatus"
 #define TR181_MIGRATIONSTATUS "Device.DeviceInfo.Migration.MigrationStatus"
 
-namespace WPEFramework
+namespace Thunder
 {
     namespace Plugin
     {
@@ -89,10 +89,10 @@ namespace WPEFramework
                 }
             } else {
                 LOGERR("Invalid Migration Status\n");
-                return (WPEFramework::Core::ERROR_INVALID_PARAMETER);
+                return (Thunder::Core::ERROR_INVALID_PARAMETER);
             }
             migrationResult.success = true;
-            return WPEFramework::Core::ERROR_NONE;
+            return Thunder::Core::ERROR_NONE;
         }
 
         Core::hresult MigrationImplementation::GetMigrationStatus(MigrationStatusInfo& migrationStatusInfo)
@@ -128,7 +128,7 @@ namespace WPEFramework
             LOGINFO("Failed to get RFC parameter for Migration Status \n");
             }
 
-            return (status ? static_cast<uint32_t>(WPEFramework::Core::ERROR_NONE) : static_cast<uint32_t>(ERROR_FILE_IO));
+            return (status ? static_cast<uint32_t>(Thunder::Core::ERROR_NONE) : static_cast<uint32_t>(ERROR_FILE_IO));
         }
 
         Core::hresult MigrationImplementation::GetBootTypeInfo(BootTypeInfo& bootTypeInfo)
@@ -155,7 +155,7 @@ namespace WPEFramework
             } else {
                  LOGERR("BootType is not present");
             }
-            return (status ? static_cast<uint32_t>(WPEFramework::Core::ERROR_NONE) : static_cast<uint32_t>(ERROR_FILE_IO));
+            return (status ? static_cast<uint32_t>(Thunder::Core::ERROR_NONE) : static_cast<uint32_t>(ERROR_FILE_IO));
         }
     } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder

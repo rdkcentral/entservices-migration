@@ -24,7 +24,7 @@
 #define API_VERSION_NUMBER_PATCH 0
 
 
-namespace WPEFramework
+namespace Thunder
 {
 
     namespace {
@@ -45,7 +45,7 @@ namespace WPEFramework
     {
 
     /*
-     *Register Migration module as wpeframework plugin
+     *Register Migration module as thunder plugin
      **/
     SERVICE_REGISTRATION(Migration, API_VERSION_NUMBER_MAJOR, API_VERSION_NUMBER_MINOR, API_VERSION_NUMBER_PATCH);
 
@@ -76,7 +76,7 @@ namespace WPEFramework
 
         if(nullptr != _migration)
         {
-            // Invoking Plugin API register to wpeframework
+            // Invoking Plugin API register to thunder
             Exchange::JMigration::Register(*this, _migration);
         }
         else
@@ -152,4 +152,4 @@ namespace WPEFramework
         }
     }
 } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder
