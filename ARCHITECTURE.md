@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Migration plugin is a WPEFramework (Thunder) service that manages device migration status and boot type information for RDK entertainment devices transitioning between operating system environments (e.g., from legacy systems to ENTOS). It provides a standardized interface for tracking migration progress and determining boot contexts.
+The Migration plugin is a Thunder service that manages device migration status and boot type information for RDK entertainment devices transitioning between operating system environments (e.g., from legacy systems to ENTOS). It provides a standardized interface for tracking migration progress and determining boot contexts.
 
 ## System Architecture
 
@@ -40,7 +40,7 @@ The Migration plugin is a WPEFramework (Thunder) service that manages device mig
 ### Core Components
 
 #### 1. Migration Plugin (Migration.cpp/h)
-- **Purpose**: WPEFramework plugin shell and lifecycle manager
+- **Purpose**: Thunder plugin shell and lifecycle manager
 - **Responsibilities**:
   - Plugin initialization and deinitialization
   - Connection management with plugin host
@@ -121,7 +121,7 @@ Four boot type scenarios are supported:
 ### Dependencies
 
 #### External Libraries
-- **WPEFramework Core**: Plugin framework and RPC infrastructure
+- **Thunder Core**: Plugin framework and RPC infrastructure
 - **entservices-apis**: Interface definitions (`IMigration`)
 - **rfcapi**: Remote Feature Control parameter access
 - **CompileSettingsDebug**: Build configuration
@@ -148,8 +148,8 @@ Four boot type scenarios are supported:
 ## Build System Integration
 
 ### CMake Configuration
-- Plugin built as shared library: `WPEFrameworkMigration.so`
-- Implementation library: `WPEFrameworkMigrationImplementation.so`
+- Plugin built as shared library: `ThunderMigration.so`
+- Implementation library: `ThunderMigrationImplementation.so`
 - Installation path: `${CMAKE_INSTALL_PREFIX}/lib/${STORAGE_DIRECTORY}/plugins`
 - Dependencies resolved via `find_package(${NAMESPACE}Plugins)`
 
@@ -175,7 +175,7 @@ Four boot type scenarios are supported:
 - Migration status stored in secure persistent location (`/opt/secure/persistent/`)
 - RFC parameters access controlled through platform security mechanisms
 - No credential storage or sensitive data handling within plugin
-- Standard WPEFramework security token validation applies
+- Standard Thunder security token validation applies
 
 ## Future Extensibility
 

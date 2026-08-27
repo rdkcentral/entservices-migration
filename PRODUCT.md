@@ -182,7 +182,7 @@ The Migration plugin is a Thunder framework service designed to orchestrate and 
 
 ### For Platform Developers
 - **Reduced Complexity**: Single service handles all migration state logic
-- **Standards Compliance**: Follows WPEFramework conventions and best practices
+- **Standards Compliance**: Follows Thunder conventions and best practices
 - **Well-Tested**: Comprehensive L1/L2 test suites ensure reliability
 - **Easy Debugging**: Extensive logging aids troubleshooting
 
