@@ -69,7 +69,7 @@ protected:
 /**
  * @brief Constructor for Migration L2 test class
  */
-MigrationL2Test::MigrationL2Test() : L2TestMocks()
+MigrationL2Test::MigrationL2Test() : L2TestMocks(), mControllerMigration(nullptr), mMigrationPlugin(nullptr)
 {
     uint32_t status = Core::ERROR_GENERAL;
 
